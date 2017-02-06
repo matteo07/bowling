@@ -17,13 +17,28 @@ class Bowling
 
   def shoot_all list
     i = 0
+    shots_count = 0
     while i < list.size do
+      shots_count += 1
+      if shots_count == 10
+        shoot_last list[i], list[i + 1], list[i + 2] || 0
+        break
+      end
       if list[i] == 10
         shoot_strike list[i]
         i += 1
       else
         shoot list[i], list[i + 1]
         i += 2
+      end
+    end
+  end
+
+  def shoot_last first, second, last
+    if first != 10
+      shoot first, second
+      if @is_spare
+        @total += last
       end
     end
   end
