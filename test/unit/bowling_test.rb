@@ -8,27 +8,29 @@ class BowlingTest < Test::Unit::TestCase
   end
 
   def test_all_zeros
-    20.times do
-      @bowling.single_shoot 0
+    10.times do
+      @bowling.shoot 0, 0
     end
     assert_equal 0, @bowling.get_score
   end
 
   def test_all_ones
-    20.times do
-      @bowling.single_shoot 1
+    10.times do
+      @bowling.shoot 1, 1
     end
     assert_equal 20, @bowling.get_score
   end
 
   def test_no_spare
     shots = [] << 0 << 0 <<  0 << 0 <<  3 << 4 <<  6 << 2 <<  0 << 0 <<  0 << 0 <<  0 << 0 <<  0 << 0 <<  0 << 0 <<  0 << 0
-    shots.each do |x|
-      @bowling.single_shoot x
-    end
+    @bowling.shoot_all shots
     assert_equal 15, @bowling.get_score
   end
 
-
+  def test_a_spare
+    shots = []  << 0 <<0 << 0 <<0 << 3 << 7 << 6 <<2 << 0 << 0 << 0 <<0 << 0 << 0 << 0 << 0 << 0 << 0 << 0 << 0
+    @bowling.shoot_all shots
+    assert_equal 24 , @bowling.get_score
+  end
 
 end
