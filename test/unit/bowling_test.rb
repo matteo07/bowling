@@ -33,4 +33,10 @@ class BowlingTest < Test::Unit::TestCase
     assert_equal 24 , @bowling.get_score
   end
 
+  def test_a_strike
+    shots = []  << 0 << 0 << 0 << 0 << 10 << 2 <<3 << 4 << 0 << 0 << 0 << 0 << 0 << 0 << 0 << 0 <<0 << 0 << 0
+    @bowling.shoot_all shots
+    assert_equal 24 , @bowling.get_score
+  end
+
 end

@@ -18,9 +18,20 @@ class Bowling
   def shoot_all list
     i = 0
     while i < list.size do
-      shoot list[i], list[i + 1]
-      i += 2
+      if list[i] == 10
+        shoot_strike list[i]
+        i += 1
+      else
+        shoot list[i], list[i + 1]
+        i += 2
+      end
     end
+  end
+
+  def shoot_strike i
+    @is_strike = true
+    @is_spare = false
+    @total += i
   end
 
   def get_score
@@ -31,7 +42,7 @@ class Bowling
 
   def shoot_first first
     @total += first
-    if @is_spare
+    if @is_spare || @is_strike
       @total += first
     end
   end
@@ -40,8 +51,12 @@ class Bowling
     @total += second
     if @first_shot + second == 10
       @is_spare = true
-    elsif
+    else
       @is_spare = false
+    end
+    if @is_strike
+      @total += second
+      @is_strike = false
     end
   end
 
