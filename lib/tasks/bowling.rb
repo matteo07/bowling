@@ -27,6 +27,10 @@ class Bowling
     @total_frames = 14
   end
 
+  def set_callisto
+    @is_callisto = true
+  end
+
   private
 
   def play_normal(list)
@@ -36,6 +40,11 @@ class Bowling
       frames_count += 1
       #last frame
       if frames_count == @total_frames
+        if @is_callisto
+          shoot_last_callisto list, i
+          puts 'caaaaaal'
+          break
+        end
         shoot_last_frame list[i], list[i + 1], list[i + 2] || 0
         break
       end
@@ -57,6 +66,11 @@ class Bowling
       frames_count += 1
       #last frame
       if frames_count == @total_frames
+        if @is_callisto
+          shoot_last_callisto list, i
+          puts 'caaaaaal'
+          break
+        end
         shoot_last_frame list[i], list[i + 1], list[i + 2], list[i + 3] || 0
         break
       end
@@ -120,6 +134,14 @@ class Bowling
     elsif @is_strike
       @score += first + second + third + last
     end
+  end
+
+  def shoot_last_callisto list , i
+    while i < list.size do
+      @score += list[i]
+      i += 1
+    end
+
   end
 
   def shoot_frame first, second, third = 0

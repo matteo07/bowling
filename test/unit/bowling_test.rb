@@ -23,46 +23,55 @@ class BowlingTest < Test::Unit::TestCase
   end
 
   def test_no_spare
-    @shots << 0 << 0 <<  0 << 0 <<  3 << 4 <<  6 << 2 <<  0 << 0 <<  0 << 0 <<  0 << 0 << 0 << 0 <<  0 << 0 <<  0 << 0
+    @shots = [0,0   ,0,0    ,3,4   , 6,2    ,0,0    , 0,0   , 0,0   ,0,0   ,0,0   ,0,0]
     check_score(15)
   end
 
   def test_a_spare
-    @shots << 0 << 0 << 0 << 0 << 3 << 7 << 6 <<2 << 0 << 0 << 0 <<0 << 0 << 0 << 0 << 0 << 0 << 0 << 0 << 0
+    @shots = [0,0   ,0,0    ,3,7   , 6,2    ,0,0    , 0,0   , 0,0   ,0,0   ,0,0   ,0,0]
     check_score(24)
   end
 
   def test_final_spare
-    @shots << 0 << 0 << 0 << 0 << 0 <<0 << 0 <<0 << 0 <<0 << 0 <<0 << 0 <<0 << 0 << 0 << 0 <<0 << 3 << 7 <<2
+    @shots = [0,0   ,0,0    ,0,0   , 0,0    ,0,0    , 0,0   , 0,0   ,0,0   ,0,0   ,3,7,2]
     check_score(12)
   end
 
   def test_a_strike
-    @shots << 0 << 0 << 0 << 0 << 10 << 2 << 3 << 4 << 0 << 0 << 0 << 0 << 0 << 0 << 0 << 0 << 0 << 0 << 0
+    @shots = [0,0   ,0,0    ,0,0   , 10    ,2,3    , 4,0   , 0,0   ,0,0   ,0,0   ,0,0]
+
     check_score(24)
   end
 
   def test_final_strike
-    @shots << 0 << 0 << 0 << 0 << 0 << 0 << 0 << 0 << 0 << 0 << 0 << 0 << 0 << 0 << 0 << 0 << 0 << 0 << 10 << 7 << 2
+    @shots = [0,0   ,0,0    ,0,0   , 0,0    ,0,0    , 0,0   , 0,0   ,0,0   ,0,0   ,10,7,2]
     check_score(19)
   end
 
   def test_a_martian_spare
-    @shots   << 3 << 3 << 4    << 5 << 0 << 0    << 0 <<0 << 0     << 0 << 0 << 0    << 0 << 0 << 0    << 0 << 0 << 0    << 0 << 0 << 0
-    @shots   << 0 << 0 << 0    << 0 << 0 << 0    << 0 << 0 << 0    << 0 << 0 << 0    << 0 << 0 << 0    << 0 << 0 << 0    << 0 << 0 << 0
+    @shots = [ 3,3,4   ,5,0,0   ,0,0,0    ,0,0,0   ,0,0,0   ,0,0,0  ,0,0,0  ,0,0,0  ,0,0,0  ,0,0,0  ,0,0,0  ,0,0,0   ,0,0,0   ,0,0,0 ]
     check_martian_score(20)
   end
 
   def test_final_martian_spare
-    @shots << 0 << 0 << 0   << 0 << 0 << 0   << 0 << 0 << 0   << 0 << 0 << 0   << 0 << 0 << 0   << 0 << 0 << 0   << 0 << 0 << 0
-    @shots << 0 << 0 << 0   << 0 << 0 << 0   << 0 << 0 << 0   << 0 << 0 << 0   << 0 << 0 << 0   << 0 << 0 << 0   << 3 << 3 << 4 << 2
+    @shots = [ 0,0,0   ,0,0,0   ,0,0,0    ,0,0,0   ,0,0,0   ,0,0,0  ,0,0,0  ,0,0,0  ,0,0,0  ,0,0,0  ,0,0,0  ,0,0,0   ,0,0,0  ,3,3,4,2]
     check_martian_score(12)
   end
 
   def test_a_martian_strike
-    @shots << 10             << 5 << 0       << 0 << 10        << 2 << 0 << 0    << 0 << 0 << 0    << 0 << 0 << 0    << 0 << 0 << 0
-    @shots << 0 << 0 << 0    << 0 << 0 << 0  << 0 << 0 << 0    << 0 << 0 << 0    << 0 << 0 << 0    << 0 << 0 << 0    << 0 << 0 << 0
+    @shots = [ 10     ,5,0      ,0,10     ,2,0,0   ,0,0,0   ,0,0,0  ,0,0,0  ,0,0,0  ,0,0,0  ,0,0,0  ,0,0,0  ,0,0,0   ,0,0,0   ,0,0,0 ]
     check_martian_score(34)
+  end
+
+  def test_callisto
+    @shots = [0,0   ,0,0    ,0,0   , 0,0    ,0,0    , 0,0   , 0,0   ,0,0   ,0,0   ,10,10,10,10,10]
+    check_callisto_score(50)
+  end
+
+  def test_callisto_martian
+    @shots = [ 0,0,0   ,0,0,0   ,0,0,0    ,0,0,0   ,0,0,0   ,0,0,0  ,0,0,0  ,0,0,0  ,0,0,0  ,0,0,0  ,0,0,0  ,0,0,0   ,0,0,0   ,10,10,10,10,10,10 ]
+    @bowling.set_martian
+    check_callisto_score(60)
   end
 
   private
@@ -74,6 +83,12 @@ class BowlingTest < Test::Unit::TestCase
 
   def check_martian_score(score)
     @bowling.set_martian
+    @bowling.shoot_all @shots
+    assert_equal score, @bowling.get_score
+  end
+
+  def check_callisto_score(score)
+    @bowling.set_callisto
     @bowling.shoot_all @shots
     assert_equal score, @bowling.get_score
   end
