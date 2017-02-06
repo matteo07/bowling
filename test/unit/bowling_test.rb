@@ -52,10 +52,27 @@ class BowlingTest < Test::Unit::TestCase
   end
 
   def test_a_martian_spare
-    shots = []  << 3 << 3 << 4 << 5 << 0 << 0 << 0 <<0 << 0 << 0 << 0 << 0 << 0 << 0 << 0 << 0 << 0 << 0 << 0 << 0 << 0 << 0 << 0 << 0 << 0 << 0 << 0 << 0 << 0 << 0
+    shots = []  << 3 << 3 << 4    << 5 << 0 << 0    << 0 <<0 << 0     << 0 << 0 << 0    << 0 << 0 << 0    << 0 << 0 << 0    << 0 << 0 << 0
+    shots       << 0 << 0 << 0    << 0 << 0 << 0    << 0 << 0 << 0    << 0 << 0 << 0    << 0 << 0 << 0    << 0 << 0 << 0    << 0 << 0 << 0
     @bowling.set_martian
     @bowling.shoot_all shots
     assert_equal 20 , @bowling.get_score
+  end
+
+  def test_final_martian_spare
+    shots = []  << 0 << 0 << 0   << 0 << 0 << 0   << 0 << 0 << 0   << 0 << 0 << 0   << 0 << 0 << 0   << 0 << 0 << 0   << 0 << 0 << 0
+    shots       << 0 << 0 << 0   << 0 << 0 << 0   << 0 << 0 << 0   << 0 << 0 << 0   << 0 << 0 << 0   << 0 << 0 << 0   << 3 << 3 << 4 << 2
+    @bowling.set_martian
+    @bowling.shoot_all shots
+    assert_equal 12 , @bowling.get_score
+  end
+
+  def test_a_martian_strike
+    shots = []  << 10 << 5 << 0   << 0 << 10      << 2 << 0 << 0    << 0 << 0 << 0    << 0 << 0 << 0    << 0 << 0 << 0    << 0 << 0 <<0
+    shots       << 0 << 0 << 0    << 0 << 0 << 0  << 0 << 0 << 0    << 0 << 0 << 0    << 0 << 0 << 0    << 0 << 0 << 0    << 0 << 0 << 0
+    @bowling.set_martian
+    @bowling.shoot_all shots
+    assert_equal 34 , @bowling.get_score
   end
 
 end

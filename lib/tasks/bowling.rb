@@ -29,12 +29,10 @@ class Bowling
   end
 
   def shoot_last first, second, third, last = 0
-    if first != @total_pins
-      shoot first, second
-      if @is_spare
-        @score += third + last
-      end
-    else
+    @score += first + second + third + last
+    if @is_spare
+      @score += first
+    elsif @is_strike
       @score += first + second + third + last
     end
   end
@@ -72,7 +70,6 @@ class Bowling
     end
     if @is_strike
       @score += second
-      @is_strike = false
     end
   end
 
@@ -114,12 +111,14 @@ class Bowling
     while i < list.size do
       frames_count += 1
       if frames_count == @total_frames
-        shoot_last list[i], list[i + 1], list[i + 2] || 0
+        shoot_last list[i], list[i + 1], list[i + 2],  list[i + 3] || 0
         break
       end
+      #strike al primo colpo
       if list[i] == @total_pins
         shoot_strike list[i]
         i += 1
+      #spare al second colpo
       elsif list[i] + list[i + 1] == @total_pins
         shoot list[i], list[i + 1]
         i += 2
