@@ -8,71 +8,75 @@ class BowlingTest < Test::Unit::TestCase
   end
 
   def test_all_zeros
-    10.times do
-      @bowling.shoot 0, 0
+    @shots = []
+    20.times do
+      @shots << 0
     end
-    assert_equal 0, @bowling.get_score
+    check_score(0)
   end
 
   def test_all_ones
-    10.times do
-      @bowling.shoot 1, 1
+    @shots = []
+    20.times do
+      @shots << 1
     end
-    assert_equal 20, @bowling.get_score
+    check_score(20)
   end
 
   def test_no_spare
-    shots = [] << 0 << 0 <<  0 << 0 <<  3 << 4 <<  6 << 2 <<  0 << 0 <<  0 << 0 <<  0 << 0 << 0 << 0 <<  0 << 0 <<  0 << 0
-    @bowling.shoot_all shots
-    assert_equal 15, @bowling.get_score
+    @shots = [] << 0 << 0 <<  0 << 0 <<  3 << 4 <<  6 << 2 <<  0 << 0 <<  0 << 0 <<  0 << 0 << 0 << 0 <<  0 << 0 <<  0 << 0
+    check_score(15)
   end
 
   def test_a_spare
-    shots = []  << 0 << 0 << 0 << 0 << 3 << 7 << 6 <<2 << 0 << 0 << 0 <<0 << 0 << 0 << 0 << 0 << 0 << 0 << 0 << 0
-    @bowling.shoot_all shots
-    assert_equal 24 , @bowling.get_score
+    @shots = []  << 0 << 0 << 0 << 0 << 3 << 7 << 6 <<2 << 0 << 0 << 0 <<0 << 0 << 0 << 0 << 0 << 0 << 0 << 0 << 0
+    check_score(24)
   end
 
   def test_final_spare
-    shots = []  << 0 << 0 << 0 << 0 << 0 <<0 << 0 <<0 << 0 <<0 << 0 <<0 << 0 <<0 << 0 << 0 << 0 <<0 << 3 << 7 <<2
-    @bowling.shoot_all shots
-    assert_equal 12 , @bowling.get_score
+    @shots = []  << 0 << 0 << 0 << 0 << 0 <<0 << 0 <<0 << 0 <<0 << 0 <<0 << 0 <<0 << 0 << 0 << 0 <<0 << 3 << 7 <<2
+    check_score(12)
   end
 
   def test_a_strike
-    shots = []  << 0 << 0 << 0 << 0 << 10 << 2 << 3 << 4 << 0 << 0 << 0 << 0 << 0 << 0 << 0 << 0 << 0 << 0 << 0
-    @bowling.shoot_all shots
-    assert_equal 24 , @bowling.get_score
+    @shots = []  << 0 << 0 << 0 << 0 << 10 << 2 << 3 << 4 << 0 << 0 << 0 << 0 << 0 << 0 << 0 << 0 << 0 << 0 << 0
+    check_score(24)
   end
 
   def test_final_strike
-    shots = []  << 0 << 0 << 0 << 0 << 0 << 0 << 0 << 0 << 0 << 0 << 0 << 0 << 0 << 0 << 0 << 0 << 0 << 0 << 10 << 7 << 2
-    @bowling.shoot_all shots
-    assert_equal 19 , @bowling.get_score
+    @shots = []  << 0 << 0 << 0 << 0 << 0 << 0 << 0 << 0 << 0 << 0 << 0 << 0 << 0 << 0 << 0 << 0 << 0 << 0 << 10 << 7 << 2
+    check_score(19)
   end
 
   def test_a_martian_spare
-    shots = []  << 3 << 3 << 4    << 5 << 0 << 0    << 0 <<0 << 0     << 0 << 0 << 0    << 0 << 0 << 0    << 0 << 0 << 0    << 0 << 0 << 0
-    shots       << 0 << 0 << 0    << 0 << 0 << 0    << 0 << 0 << 0    << 0 << 0 << 0    << 0 << 0 << 0    << 0 << 0 << 0    << 0 << 0 << 0
-    @bowling.set_martian
-    @bowling.shoot_all shots
-    assert_equal 20 , @bowling.get_score
+    @shots = []  << 3 << 3 << 4    << 5 << 0 << 0    << 0 <<0 << 0     << 0 << 0 << 0    << 0 << 0 << 0    << 0 << 0 << 0    << 0 << 0 << 0
+    @shots       << 0 << 0 << 0    << 0 << 0 << 0    << 0 << 0 << 0    << 0 << 0 << 0    << 0 << 0 << 0    << 0 << 0 << 0    << 0 << 0 << 0
+    check_martian_score(20)
   end
 
   def test_final_martian_spare
-    shots = []  << 0 << 0 << 0   << 0 << 0 << 0   << 0 << 0 << 0   << 0 << 0 << 0   << 0 << 0 << 0   << 0 << 0 << 0   << 0 << 0 << 0
-    shots       << 0 << 0 << 0   << 0 << 0 << 0   << 0 << 0 << 0   << 0 << 0 << 0   << 0 << 0 << 0   << 0 << 0 << 0   << 3 << 3 << 4 << 2
-    @bowling.set_martian
-    @bowling.shoot_all shots
-    assert_equal 12 , @bowling.get_score
+    @shots = []  << 0 << 0 << 0   << 0 << 0 << 0   << 0 << 0 << 0   << 0 << 0 << 0   << 0 << 0 << 0   << 0 << 0 << 0   << 0 << 0 << 0
+    @shots       << 0 << 0 << 0   << 0 << 0 << 0   << 0 << 0 << 0   << 0 << 0 << 0   << 0 << 0 << 0   << 0 << 0 << 0   << 3 << 3 << 4 << 2
+    check_martian_score(12)
   end
 
   def test_a_martian_strike
-    shots = []  << 10 << 5 << 0   << 0 << 10      << 2 << 0 << 0    << 0 << 0 << 0    << 0 << 0 << 0    << 0 << 0 << 0    << 0 << 0 <<0
-    shots       << 0 << 0 << 0    << 0 << 0 << 0  << 0 << 0 << 0    << 0 << 0 << 0    << 0 << 0 << 0    << 0 << 0 << 0    << 0 << 0 << 0
+    @shots = []  << 10             << 5 << 0       << 0 << 10        << 2 << 0 << 0    << 0 << 0 << 0    << 0 << 0 << 0    << 0 << 0 << 0
+    @shots       << 0 << 0 << 0    << 0 << 0 << 0  << 0 << 0 << 0    << 0 << 0 << 0    << 0 << 0 << 0    << 0 << 0 << 0    << 0 << 0 << 0
+    check_martian_score(34)
+  end
+
+  private
+
+  def check_score(score)
+    @bowling.shoot_all @shots
+    assert_equal score, @bowling.get_score
+  end
+
+  def check_martian_score(score)
     @bowling.set_martian
-    @bowling.shoot_all shots
-    assert_equal 34 , @bowling.get_score
+    @bowling.shoot_all @shots
+    assert_equal score, @bowling.get_score
   end
 
 end
