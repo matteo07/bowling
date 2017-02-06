@@ -40,6 +40,8 @@ class Bowling
       if @is_spare
         @total += last
       end
+    else
+      @total += first + second + last
     end
   end
 

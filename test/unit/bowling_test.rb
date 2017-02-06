@@ -22,13 +22,13 @@ class BowlingTest < Test::Unit::TestCase
   end
 
   def test_no_spare
-    shots = [] << 0 << 0 <<  0 << 0 <<  3 << 4 <<  6 << 2 <<  0 << 0 <<  0 << 0 <<  0 << 0 <<  0 << 0 <<  0 << 0 <<  0 << 0
+    shots = [] << 0 << 0 <<  0 << 0 <<  3 << 4 <<  6 << 2 <<  0 << 0 <<  0 << 0 <<  0 << 0 << 0 << 0 <<  0 << 0 <<  0 << 0
     @bowling.shoot_all shots
     assert_equal 15, @bowling.get_score
   end
 
   def test_a_spare
-    shots = []  << 0 <<0 << 0 <<0 << 3 << 7 << 6 <<2 << 0 << 0 << 0 <<0 << 0 << 0 << 0 << 0 << 0 << 0 << 0 << 0
+    shots = []  << 0 << 0 << 0 << 0 << 3 << 7 << 6 <<2 << 0 << 0 << 0 <<0 << 0 << 0 << 0 << 0 << 0 << 0 << 0 << 0
     @bowling.shoot_all shots
     assert_equal 24 , @bowling.get_score
   end
@@ -40,9 +40,15 @@ class BowlingTest < Test::Unit::TestCase
   end
 
   def test_a_strike
-    shots = []  << 0 << 0 << 0 << 0 << 10 << 2 <<3 << 4 << 0 << 0 << 0 << 0 << 0 << 0 << 0 << 0 <<0 << 0 << 0
+    shots = []  << 0 << 0 << 0 << 0 << 10 << 2 << 3 << 4 << 0 << 0 << 0 << 0 << 0 << 0 << 0 << 0 << 0 << 0 << 0
     @bowling.shoot_all shots
     assert_equal 24 , @bowling.get_score
+  end
+
+  def test_final_strike
+    shots = []  << 0 << 0 << 0 << 0 << 0 << 0 << 0 << 0 << 0 << 0 << 0 << 0 << 0 << 0 << 0 << 0 << 0 << 0 << 10 << 7 << 2
+    @bowling.shoot_all shots
+    assert_equal 19 , @bowling.get_score
   end
 
 end
