@@ -1,30 +1,104 @@
 class Bowling
 
   def startgame
-    @total = 0
+    @total_pins = 10
+    @total_frames = 10
+    @score = 0
     @is_spare = false
     @is_strike = false
     @is_two_strike = false
+    @is_martian_rule = false
     p "Game started"
   end
 
-  def shoot first, second
+  def shoot first, second, third = 0
     check_shot first, second
     @first_shot = first
+    @second_shot = second
     shoot_first first
     shoot_second second
+    shoot_third third
   end
 
   def shoot_all list
+    if @is_martian_rule
+      shoot_martian(list)
+    else
+      shoot_normal(list)
+    end
+  end
+
+  def shoot_last first, second, third, last = 0
+    if first != @total_pins
+      shoot first, second
+      if @is_spare
+        @score += third + last
+      end
+    else
+      @score += first + second + third + last
+    end
+  end
+
+  def shoot_strike i
+    @is_strike = true
+    @is_spare = false
+    @score += i
+  end
+
+  def get_score
+    @score
+  end
+
+  def set_martian
+    @is_martian_rule = true
+    @total_frames = 14
+  end
+
+  private
+
+  def shoot_first first
+    @score += first
+    if @is_spare || @is_strike
+      @score += first
+    end
+  end
+
+  def shoot_second second
+    @score += second
+    if @first_shot + second == @total_pins
+      @is_spare = true
+    else
+      @is_spare = false
+    end
+    if @is_strike
+      @score += second
+      @is_strike = false
+    end
+  end
+
+  def shoot_third(third)
+    @score += third
+    if @first_shot + @second_shot + third == @total_pins
+      @is_spare = true
+    else
+      @is_spare = false
+    end
+    if @is_strike
+      @score += third
+      @is_strike = false
+    end
+  end
+
+  def shoot_normal(list)
     i = 0
-    shots_count = 0
+    frames_count = 0
     while i < list.size do
-      shots_count += 1
-      if shots_count == 10
+      frames_count += 1
+      if frames_count == @total_frames
         shoot_last list[i], list[i + 1], list[i + 2] || 0
         break
       end
-      if list[i] == 10
+      if list[i] == @total_pins
         shoot_strike list[i]
         i += 1
       else
@@ -34,58 +108,37 @@ class Bowling
     end
   end
 
-  def shoot_last first, second, last
-    if first != 10
-      shoot first, second
-      if @is_spare
-        @total += last
+  def shoot_martian(list)
+    i = 0
+    frames_count = 0
+    while i < list.size do
+      frames_count += 1
+      if frames_count == @total_frames
+        shoot_last list[i], list[i + 1], list[i + 2] || 0
+        break
       end
-    else
-      @total += first + second + last
+      if list[i] == @total_pins
+        shoot_strike list[i]
+        i += 1
+      elsif list[i] + list[i + 1] == @total_pins
+        shoot list[i], list[i + 1]
+        i += 2
+      else
+        shoot list[i], list[i + 1], list[i + 2]
+        i += 3
+      end
     end
   end
 
-  def shoot_strike i
-    @is_strike = true
-    @is_spare = false
-    @total += i
-  end
-
-  def get_score
-    @total
-  end
-
-  private
-
-  def shoot_first first
-    @total += first
-    if @is_spare || @is_strike
-      @total += first
+  def check_shot(first, second, third = 0)
+    if first > @total_pins
+      raise 'first shot over ' + @total_pins.to_s
     end
-  end
-
-  def shoot_second second
-    @total += second
-    if @first_shot + second == 10
-      @is_spare = true
-    else
-      @is_spare = false
+    if second > @total_pins
+      raise 'second shot over ' + @total_pins.to_s
     end
-    if @is_strike
-      @total += second
-      @is_strike = false
-    end
-  end
-
-  def check_shot(first, second)
-    if first > 10
-      raise "first shot over 10"
-    end
-    if second > 10
-      raise "second shot over 10"
-    end
-    if first + second > 10
-      raise "sum over 10"
+    if first + second + third > @total_pins
+      raise 'sum over ' + @total_pins.to_s
     end
   end
 

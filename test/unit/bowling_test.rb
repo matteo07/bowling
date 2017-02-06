@@ -51,4 +51,11 @@ class BowlingTest < Test::Unit::TestCase
     assert_equal 19 , @bowling.get_score
   end
 
+  def test_a_martian_spare
+    shots = []  << 3 << 3 << 4 << 5 << 0 << 0 << 0 <<0 << 0 << 0 << 0 << 0 << 0 << 0 << 0 << 0 << 0 << 0 << 0 << 0 << 0 << 0 << 0 << 0 << 0 << 0 << 0 << 0 << 0 << 0
+    @bowling.set_martian
+    @bowling.shoot_all shots
+    assert_equal 20 , @bowling.get_score
+  end
+
 end
