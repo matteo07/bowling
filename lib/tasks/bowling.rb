@@ -17,22 +17,17 @@ class Bowling
   end
 
   def play(list)
-    if @is_martian_rule
-      frames = divide_list_in_martian_frames list
-    else
+    if !@is_martian_rule
       frames = divide_list_in_frames list
+    else
+      frames = divide_list_in_martian_frames list
     end
-    i = 0
-    frames_count = 0
-    while i < frames.size do
-      frames_count += 1
-      #last frame
-      if frames_count == @total_frames
-        shoot_last frames[i]
-        break
+    frames.each_with_index do |frame, i|
+      if i != frames.length - 1
+        shoot frame
+      else   #last frame
+        shoot_last frame
       end
-      shoot frames[i]
-      i += 1
       if @is_venusian_rule
         @total_pins += 1
       end

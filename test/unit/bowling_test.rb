@@ -48,6 +48,8 @@ class BowlingTest < Test::Unit::TestCase
     check_score(19)
   end
 
+  # ------------------------------------------- MARTIAN -------------------------------------------
+
   def test_a_martian_spare
     @shots = [ 3,3,4   ,5,0,0   ,0,0,0    ,0,0,0   ,0,0,0   ,0,0,0  ,0,0,0  ,0,0,0  ,0,0,0  ,0,0,0  ,0,0,0  ,0,0,0   ,0,0,0   ,0,0,0 ]
     check_martian_score(20)
@@ -63,6 +65,8 @@ class BowlingTest < Test::Unit::TestCase
     check_martian_score(34)
   end
 
+  # ------------------------------------------- CALLISTO -------------------------------------------
+
   def test_callisto
     @shots = [0,0   ,0,0    ,0,0   , 0,0    ,0,0    , 0,0   , 0,0   ,0,0   ,0,0   ,10,10,10,10,10]
     check_callisto_score(50)
@@ -74,36 +78,38 @@ class BowlingTest < Test::Unit::TestCase
     check_callisto_score(60)
   end
 
+  # ------------------------------------------- VENUS -------------------------------------------
+
   def test_venusian_spare
     @shots = [0,0   ,1,1    ,1,0   , 0,0    ,0,0    , 0,0   , 0,0   ,0,0   ,0,0   ,0,0,0]
-    @bowling.set_venusian
-    check_score(4)
-  end
-
-  def test_venusian_martian_spare
-    @shots = [ 0,0,0   ,0,0,0   ,1,1,1    ,3,0,0   ,0,0,0   ,0,0,0  ,0,0,0  ,0,0,0  ,0,0,0  ,0,0,0  ,0,0,0  ,0,0,0   ,0,0,0   ,0,0,0 ]
-    @bowling.set_venusian
-    check_martian_score(9)
-  end
-
-  def test_venusian_martian_spare_and_callisto
-    @shots = [ 0,0,0   ,0,0,0   ,1,1,1    ,3,0,0   ,0,0,0   ,0,0,0  ,0,0,0  ,0,0,0  ,0,0,0  ,0,0,0  ,0,0,0  ,0,0,0   ,0,0,0   ,14,14,14,14,14 ]
-    @bowling.set_venusian
-    @bowling.set_callisto
-    check_martian_score(79)
-  end
-
-  def test_venusian_strike_and_callisto
-    @shots = [0,0   ,0,0    ,3   , 2,1    ,0,0    , 0,0   , 0,0   ,0,0   ,0,0   ,10,10,10,10,10]
-    @bowling.set_venusian
-    check_callisto_score(59)
+    check_venus_score(4)
   end
 
   def test_venusian_strike
     @shots = [0,0   ,0,0    ,3   , 3,0    ,0,0    , 0,0   , 0,0   ,0,0   ,0,0   ,0,0,0]
-    @bowling.set_venusian
-    check_score(9)
+    check_venus_score(9)
   end
+
+  def test_venusian_martian_spare
+    @shots = [ 0,0,0   ,0,0,0   ,1,1,1    ,3,0,0   ,0,0,0   ,0,0,0  ,0,0,0  ,0,0,0  ,0,0,0  ,0,0,0  ,0,0,0  ,0,0,0   ,0,0,0   ,0,0,0 ]
+    @bowling.set_martian
+    check_venus_score(9)
+  end
+
+  def test_venusian_martian_spare_and_callisto
+    @shots = [ 0,0,0   ,0,0,0   ,1,1,1    ,3,0,0   ,0,0,0   ,0,0,0  ,0,0,0  ,0,0,0  ,0,0,0  ,0,0,0  ,0,0,0  ,0,0,0   ,0,0,0   ,14,14,14,14,14 ]
+    @bowling.set_martian
+    @bowling.set_callisto
+    check_venus_score(79)
+  end
+
+  def test_venusian_strike_and_callisto
+    @shots = [0,0   ,0,0    ,3   , 2,1    ,0,0    , 0,0   , 0,0   ,0,0   ,0,0   ,10,10,10,10,10]
+    @bowling.set_callisto
+    check_venus_score(59)
+  end
+
+
 
   private
 
@@ -114,14 +120,17 @@ class BowlingTest < Test::Unit::TestCase
 
   def check_martian_score(score)
     @bowling.set_martian
-    @bowling.play @shots
-    assert_equal score, @bowling.get_score
+    check_score score
   end
 
   def check_callisto_score(score)
     @bowling.set_callisto
-    @bowling.play @shots
-    assert_equal score, @bowling.get_score
+    check_score score
+  end
+
+  def check_venus_score(score)
+    @bowling.set_venusian
+    check_score score
   end
 
 end
