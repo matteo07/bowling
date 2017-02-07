@@ -74,6 +74,18 @@ class BowlingTest < Test::Unit::TestCase
     check_callisto_score(60)
   end
 
+  def test_venusian_spare
+    @shots = [0,0   ,1,1    ,1,0   , 0,0    ,0,0    , 0,0   , 0,0   ,0,0   ,0,0   ,0,0,0]
+    @bowling.set_venusian
+    check_score(4)
+  end
+
+  def test_venusian_strike
+    @shots = [0,0   ,0,0    ,3   , 3,0    ,0,0    , 0,0   , 0,0   ,0,0   ,0,0   ,0,0,0]
+    @bowling.set_venusian
+    check_score(9)
+  end
+
   private
 
   def check_score(score)

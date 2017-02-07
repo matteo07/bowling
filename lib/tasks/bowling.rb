@@ -8,6 +8,7 @@ class Bowling
     @is_strike = false
     @is_two_strike = false
     @is_martian_rule = false
+    @is_venusian_rule = false
   end
 
   def shoot_all list
@@ -31,6 +32,11 @@ class Bowling
     @is_callisto = true
   end
 
+  def set_venusian
+    @is_venusian_rule = true
+    @total_pins = 1
+  end
+
   private
 
   def play_normal(list)
@@ -42,7 +48,6 @@ class Bowling
       if frames_count == @total_frames
         if @is_callisto
           shoot_last_callisto list, i
-          puts 'caaaaaal'
           break
         end
         shoot_last_frame list[i], list[i + 1], list[i + 2] || 0
@@ -56,6 +61,9 @@ class Bowling
         shoot_frame list[i], list[i + 1]
         i += 2
       end
+      if @is_venusian_rule
+        @total_pins += 1
+      end
     end
   end
 
@@ -68,7 +76,6 @@ class Bowling
       if frames_count == @total_frames
         if @is_callisto
           shoot_last_callisto list, i
-          puts 'caaaaaal'
           break
         end
         shoot_last_frame list[i], list[i + 1], list[i + 2], list[i + 3] || 0
