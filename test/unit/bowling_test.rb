@@ -4,7 +4,7 @@ class BowlingTest < Test::Unit::TestCase
 
   def setup
     @bowling = Bowling.new
-    @bowling.startgame
+    @bowling.start_game
     @shots = []
   end
 
@@ -108,19 +108,19 @@ class BowlingTest < Test::Unit::TestCase
   private
 
   def check_score(score)
-    @bowling.shoot_all @shots
+    @bowling.play @shots
     assert_equal score, @bowling.get_score
   end
 
   def check_martian_score(score)
     @bowling.set_martian
-    @bowling.shoot_all @shots
+    @bowling.play @shots
     assert_equal score, @bowling.get_score
   end
 
   def check_callisto_score(score)
     @bowling.set_callisto
-    @bowling.shoot_all @shots
+    @bowling.play @shots
     assert_equal score, @bowling.get_score
   end
 
