@@ -96,14 +96,14 @@ class BowlingTest < Test::Unit::TestCase
     check_venus_score(9)
   end
 
-  def test_venusian_martian_spare_and_callisto
+  def test_venus_mars_spare_and_call
     @shots = [ 0,0,0   ,0,0,0   ,1,1,1    ,3,0,0   ,0,0,0   ,0,0,0  ,0,0,0  ,0,0,0  ,0,0,0  ,0,0,0  ,0,0,0  ,0,0,0   ,0,0,0   ,14,14,14,14,14 ]
     @bowling.set_martian
     @bowling.set_callisto
     check_venus_score(79)
   end
 
-  def test_venusian_strike_and_callisto
+  def test_venus_strike_and_callisto
     @shots = [0,0   ,0,0    ,3   , 2,1    ,0,0    , 0,0   , 0,0   ,0,0   ,0,0   ,10,10,10,10,10]
     @bowling.set_callisto
     check_venus_score(59)
