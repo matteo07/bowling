@@ -80,6 +80,25 @@ class BowlingTest < Test::Unit::TestCase
     check_score(4)
   end
 
+  def test_venusian_martian_spare
+    @shots = [ 0,0,0   ,0,0,0   ,1,1,1    ,3,0,0   ,0,0,0   ,0,0,0  ,0,0,0  ,0,0,0  ,0,0,0  ,0,0,0  ,0,0,0  ,0,0,0   ,0,0,0   ,0,0,0 ]
+    @bowling.set_venusian
+    check_martian_score(9)
+  end
+
+  def test_venusian_martian_spare_and_callisto
+    @shots = [ 0,0,0   ,0,0,0   ,1,1,1    ,3,0,0   ,0,0,0   ,0,0,0  ,0,0,0  ,0,0,0  ,0,0,0  ,0,0,0  ,0,0,0  ,0,0,0   ,0,0,0   ,14,14,14,14,14 ]
+    @bowling.set_venusian
+    @bowling.set_callisto
+    check_martian_score(79)
+  end
+
+  def test_venusian_strike_and_callisto
+    @shots = [0,0   ,0,0    ,3   , 2,1    ,0,0    , 0,0   , 0,0   ,0,0   ,0,0   ,10,10,10,10,10]
+    @bowling.set_venusian
+    check_callisto_score(59)
+  end
+
   def test_venusian_strike
     @shots = [0,0   ,0,0    ,3   , 3,0    ,0,0    , 0,0   , 0,0   ,0,0   ,0,0   ,0,0,0]
     @bowling.set_venusian

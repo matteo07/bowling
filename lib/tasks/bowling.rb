@@ -93,6 +93,9 @@ class Bowling
         shoot_frame list[i], list[i + 1], list[i + 2]
         i += 3
       end
+      if @is_venusian_rule
+        @total_pins += 1
+      end
     end
   end
 
