@@ -1,4 +1,4 @@
 # bowling
 
-implementazione di un motore di calcolo per punteggi del bowling  
-[regole](http://www.slideshare.net/kevinrutherford/ocp-kata-24027400)
+bowling score calculator  
+[rules](http://www.slideshare.net/kevinrutherford/ocp-kata-24027400)
